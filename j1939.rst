@@ -37,6 +37,11 @@ NOT TO BE DISTRIBUTED OR DUPLICATED WITHOUT PERMISSION
 +-----------------+-----------------+-----------------+-----------------+
 | 1.3.3           | Sept 25, 2017   | Feng / JF       | Fix typo page 6 |
 +-----------------+-----------------+-----------------+-----------------+
+| 1.3.4           | Mar 15, 2018    | Feng            | Change 5.5.1    |
+|                 |                 |                 | and 5.5.2 match |
+|                 |                 |                 | against         |
+|                 |                 |                 | firmware        |
++-----------------+-----------------+-----------------+-----------------+
 
 TABLE OF CONTENTS
 
@@ -801,9 +806,11 @@ configurable.
 | 6        | 65520    | 255        | 240          | 128-247        |            |
 +----------+----------+------------+--------------+----------------+------------+
 
-8 bytes indicate PS for algorithm reset, save configuration, hardware
-bits, software bits, status, packet rate, packet type and digital filer
-selected by users if default PS is conflicted.
+8-byte payload indicates PS numbers instead of default values declared
+in this doc.
+
+Byte 0: algorithm reset, byte 1: reserved, byte 2: hardware bits, byte
+3: software bits, byte 4: status, byte 5–7: reserved.
 
 PGN message on CAN bus is 0x18FFF0\ **SA**.
 
@@ -816,11 +823,12 @@ Bank1 of PS numbers:
 | 6        | 65521    | 255        | 241          | 128-247        |            |
 +----------+----------+------------+--------------+----------------+------------+
 
-8 bytes indicate PS for orientation, user behavior, BIT, angle alarm,
-cone alarm, acceleration parameter selected by users if default PS is
-conflicted.
+Byte 0: packet rate, byte 1: packet type, byte 2: digital filter, byte
+3: orientation, byte 4-7: reserved.
 
 PGN message on CAN bus is 0x18FFF1\ **SA**.
+
+The pool of PS values should be from decimal 80 to 111.
 
 8. .. rubric:: Data Packet
       :name: data-packet
@@ -907,15 +915,7 @@ The node with null address sends out a global request and waits for the
 responses from all the nodes on CAN bus. Then, it sends out an address
 claim message with a chosen address.
 
-Node Network
-
-Request DA=255 SA=254
-
-address claim DA=255 SA = x
-
-address claim DA=255 SA = z
-
-address claim DA=255 SA = w
+|image2|
 
 Existence of node address:
 --------------------------
@@ -924,17 +924,17 @@ The node with an existed address sends out an address claim message and
 waits for responses from all the nodes on CAN bus, then decides to keep
 the address or choose next available address.
 
-Address claim SA=x Name A
-
-Address claim SA=x Name B
-
-Address Claim SA=x Name A
-
-Address Claim SA=y Name B
+|image3|
 
 .. |A close up of a sign Description generated with very high confidence| image:: media/image1.png
-   :width: 4.93334in
-   :height: 2.82001in
+   :width: 4.93333in
+   :height: 2.82014in
 .. |image1| image:: media/image2.png
    :width: 6.76042in
    :height: 2.5in
+.. |image2| image:: media/image3.png
+   :width: 5.05208in
+   :height: 3.92708in
+.. |image3| image:: media/image4.png
+   :width: 7.09375in
+   :height: 3.92708in
