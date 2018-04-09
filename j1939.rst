@@ -2,9 +2,6 @@
 
 **The Application Protocol of Aceinna SAE J1939**
 
---CONFIDENTIAL—
-
-NOT TO BE DISTRIBUTED OR DUPLICATED WITHOUT PERMISSION
 
 **REVISION HISTORY**
 
@@ -47,9 +44,9 @@ TABLE OF CONTENTS
 
 `1 Introduction 4 <#introduction>`__
 
-`1.1 Purpose 4 <#purpose>`__
+`1.1 Purpose`_
 
-`1.2 Technical assistance 4 <#technical-assistance>`__
+`1.2 Technical assistance`_
 
 `2 Data Unit Definition 5 <#data-unit-definition>`__
 
@@ -59,30 +56,30 @@ TABLE OF CONTENTS
 
 `5 Function Detail 8 <#function-detail>`__
 
-`5.1 Command and Status Functions 8 <#command-and-status-functions>`__
+`5.1 Command and Status Functions`_
 
-`5.2 Test Functions: 9 <#test-functions>`__
+`5.2 Test Functions`_
 
-`5.3 Status: 11 <#status>`__
+`5.3 Status`_
 
-`5.4 Configure commands: 12 <#configure-commands>`__
+`5.4 Configure commands`_
 
-`5.5 Assigning PS Numbers 15 <#assigning-ps-numbers>`__
+`5.5 Assigning PS Numbers`_
 
-`5.6 Data Packet 15 <#data-packet>`__
+`5.6 Data Packet`_
 
 `6 Address claiming 17 <#address-claiming>`__
 
-`6.1 Non-existence of node address:
-17 <#non-existence-of-node-address>`__
+`6.1 Non-existence of node address`_
 
-`6.2 Existence of node address: 18 <#existence-of-node-address>`__
+`6.2 Existence of node address`_
 
 1. .. rubric:: Introduction
       :name: introduction
 
-   1. .. rubric:: Purpose
-         :name: purpose
+.. _`1.1 purpose`:
+
+**1.1 Purpose**
 
 Aceinna J1939 Protocol (AJP) is a communication mechanism used for
 resolution of the identification of CAN nodes, configuration, and data
@@ -93,16 +90,15 @@ boundaries of a single CAN network,　never routed internetwork nodes.
 The property places AJP into the layer fourth in Open Systems
 Interconnection (OSI) model, but not developed into OSI framework.
 
-Technical assistance 
----------------------
+.. _`1.2 technical assistance`:
+
+**1.2 Technical assistance** 
 
 For assistance or clarification on information in this document, submit
 a case to Aceinna Inc., `www.Aceinna.com <http://www.memsic.com/>`__
 
-Data Unit Definition
-====================
-
-Data units
+2. .. rubric:: Data Unit Definition
+      :name: data-unit-definition
 
 Unit reports data in standard engineering units as shown in following
 table.
@@ -125,8 +121,8 @@ table.
 
 TABLE 1: Data Unit Definition
 
-Function Overview
-=================
+3. .. rubric:: Function Overview
+      :name: function-overview
 
 To execute a command the host controller sends a request packet as:
 
@@ -229,8 +225,8 @@ base PGN.
 
 TABLE 2: Function Summary
 
-Packet type
-===========
+4. .. rubric:: Packet type
+      :name: packet-type
 
 AJP claims two types of packets among J1939 nodes, as control and data
 message.
@@ -247,11 +243,11 @@ and recipient.
 5. .. rubric:: Function Detail
       :name: function-detail
 
-   3. .. rubric:: Command and Status Functions
-         :name: command-and-status-functions
+.. _`5.1 command and status functions`:
 
-      1. .. rubric:: Version Command:
-            :name: version-command
+**5.1 Command and Status Functions**
+
+**5.1.1 Version Command:**
 
 Type: Global
 
@@ -259,7 +255,7 @@ Host Data Field: 0 Bytes
 
 Host broadcasts a request packet following up SAEJ1939.
 
-Units on the bus respond with PGN message: 0x18FEDA\ ***SA[DF]***
+Units on the bus respond with PGN message: 0x18FEDA\ **SA**
 
 +----------+----------+------------+--------------+----------------+------------+
 | Priority | Base PGN | PDU format | PDU specific | Source Address | Data Field |
@@ -275,14 +271,14 @@ Version Data Field Description
 | Major  | Minor  | Patch  | Stage  | Build  |
 +--------+--------+--------+--------+--------+
 
-ECU ID Command:
-~~~~~~~~~~~~~~~
+ 
+**5.1.2 ECU ID Command:**
 
 Type: Global
 
 Host Data Field: 0 bytes
 
-Units on the bus respond with message: 0x18FDC5\ ***SA[DF]***
+Units on the bus respond with message: 0x18FDC5\ **SA***
 
 +----------+----------+------------+--------------+----------------+------------+
 | Priority | Base PGN | PDU format | PDU specific | Source address | Data Field |
@@ -292,8 +288,8 @@ Units on the bus respond with message: 0x18FDC5\ ***SA[DF]***
 
 Data Field Definition follows up Table 1 of SAE J1939-81.
 
-Algorithm Reset Command:
-~~~~~~~~~~~~~~~~~~~~~~~~
+
+**5.1.3 Algorithm Reset Command:**
 
 Type: Specific
 
@@ -303,7 +299,7 @@ Response Data Field: 3 Bytes
 
 PS is Host configurable. See section 5.5
 
-Units on the bus respond with message: 00x18FF50\ ***SA[DF]***
+Units on the bus respond with message: 00x18FF50\ **SA**
 (default).
 
 +----------+----------+------------+--------------+----------------+------------+
@@ -328,8 +324,7 @@ Data Field Definition
 |      |                             | 0x01 = Success             |
 +------+-----------------------------+----------------------------+
 
-Save Configuration Command:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**5.1.4 Save Configuration Command:**
 
 Type: Specific.
 
@@ -339,7 +334,7 @@ Response Data Field: 3 Bytes.
 
 PS is Host configurable. See section 5.5.
 
-Units on the bus respond with message: 0x18FF51\ ***SA[DF]*** (default).
+Units on the bus respond with message: 0x18FF51\ **SA** (default).
 
 +----------+----------+------------+--------------+----------------+------------+
 | Priority | Base PGN | PDU format | PDU specific | Source address | Data Field |
@@ -363,11 +358,12 @@ Data Field Definition.
 |      |                             | 0x01 = Success             |
 +------+-----------------------------+----------------------------+
 
-4. .. rubric:: Test Functions:
-      :name: test-functions
+.. _`5.2 test functions`:
 
-   5. .. rubric:: Hardware bits:
-         :name: hardware-bits
+**5.2 Test Functions:**
+
+
+**5.2.1 Hardware bits:**
 
 Type: Broadcast
 
@@ -375,7 +371,7 @@ Host sends out a request command.
 
 Response Data Field: 8 Bytes
 
-Units on the bus respond with message: 0x18FF52\ ***SA[DF]***
+Units on the bus respond with message: 0x18FF52\ **SA**
 
 +----------+----------+------------+--------------+----------------+------------+
 | Priority | Base PGN | PDU format | PDU specific | Source address | Data Field |
@@ -434,8 +430,7 @@ trigger the associated intermediate signal and masterStatus flag.
 The hardwareError field contains flag that indicate various types of
 internal hardware errors.
 
-Software bits:
-~~~~~~~~~~~~~~
+**5.2.2 Software bits:**
 
 Type: Specific
 
@@ -443,7 +438,7 @@ Host sends out a request command.
 
 Response Data Field: 1 Byte
 
-Units on the bus respond with message: 0x18FF53\ ***SA[DF]***
+Units on the bus respond with message: 0x18FF53\ **SA**
 
 +----------+----------+------------+--------------+----------------+------------+
 | Priority | Base PGN | PDU format | PDU specific | Source address | Data Field |
@@ -495,8 +490,9 @@ and missedNavigationStep.
 The software DataError contains flags that indicate low level software
 data errors, calibrationCRCError.
 
-Status:
--------
+.. _`5.3 status`:
+
+**5.3 Status:**
 
 Type: Specific
 
@@ -504,7 +500,7 @@ Host sends out a request command.
 
 Response Data Field: 2 Bytes
 
-Units on the bus respond with message: 0x18FF54\ ***SA[DF]***
+Units on the bus respond with message: 0x18FF54\ **SA**
 
 +----------+----------+------------+--------------+----------------+------------+
 | Priority | Base PGN | PDU format | PDU specific | Source address | Data Field |
@@ -576,11 +572,11 @@ The sensorStatus field contains flags that indicate various internal
 sensor conditions and alerts that are not errors or problems and is bit
 12.
 
-6. .. rubric:: Configure commands:
-      :name: configure-commands
+.. _`5.4 configure commands`:
 
-   7. .. rubric:: Packet rate divider:
-         :name: packet-rate-divider
+**5.4 Configure commands:**
+
+**5.4.1 Packet rate divider:**
 
 +----------+----------+------------+--------------+----------------+------------+
 | Priority | Base PGN | PDU format | PDU specific | Source address | Data Field |
@@ -619,8 +615,7 @@ Packet Rate Divider Field Value Definition
 The default PGN message on CAN bus is 0x18FF55\ **SA** and PS is
 configurable.
 
-Data packet type:
-~~~~~~~~~~~~~~~~~
+**5.4.2 Data packet type:**
 
 +----------+----------+------------+--------------+----------------+------------+
 | Priority | Base PGN | PDU format | PDU specific | Source address | Data Field |
@@ -637,8 +632,7 @@ bit 1 – slope sensor, bit 2 – angular rate, bit 3 – accelerometer.
 The default PGN message on CAN bus is 0x18FF56\ **SA** and PS is
 configurable.
 
-Digital filter:
-~~~~~~~~~~~~~~~
+**5.4.3 Digital filter:**
 
 +----------+----------+------------+--------------+----------------+------------+
 | Priority | Base PGN | PDU format | PDU specific | Source address | Data Field |
@@ -657,8 +651,7 @@ Frequency choices are 5, 10, 20, and 50Hz
 The default PGN message on CAN bus is 0x18FF57\ **SA and** PS is
 configurable.
 
-Orientation:
-~~~~~~~~~~~~
+**5.4.4 Orientation:**
 
 +----------+----------+------------+--------------+----------------+------------+
 | Priority | Base PGN | PDU format | PDU specific | Source address | Data Field |
@@ -728,15 +721,12 @@ Orientation Field Byte Value Definition
 | 0x016C                        | +Uz          | -Ux          | -Uy          |
 +-------------------------------+--------------+--------------+--------------+
 
-.. _section-1:
 
 |image1|
-~~~~~~~~
 
 Figure: Default Orientation
 
-User behavior switches:
-~~~~~~~~~~~~~~~~~~~~~~~
+**5.4.5 User behavior switches:**
 
 +----------+----------+------------+--------------+----------------+------------+
 | Priority | Base PGN | PDU format | PDU specific | Source address | Data Field |
@@ -777,8 +767,7 @@ Bit definition for User Behavior Switches
 |                       |                       | sensor over-range     |
 +-----------------------+-----------------------+-----------------------+
 
-Acceleration parameters (optional):
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**5.4.6 Acceleration parameters (optional):**
 
 +----------+----------+------------+--------------+----------------+------------+
 | Priority | Base PGN | PDU format | PDU specific | Source address | Data Field |
@@ -794,11 +783,11 @@ parameters for the EKF coming from host side.
 The default PGN message on CAN bus is 0x18FF5D\ **SA** and PS is
 configurable.
 
-7. .. rubric:: Assigning PS Numbers
-      :name: assigning-ps-numbers
+.. _`5.5 assigning ps numbers`:
 
-   13. .. rubric:: Bank0 of PS numbers:
-          :name: bank0-of-ps-numbers
+**5.5 Assigning PS Numbers**
+
+**5.5.1 Bank0 of PS numbers:**
 
 +----------+----------+------------+--------------+----------------+------------+
 | Priority | Base PGN | PDU format | PDU specific | Source address | Data Field |
@@ -814,8 +803,7 @@ Byte 0: algorithm reset, byte 1: reserved, byte 2: hardware bits, byte
 
 PGN message on CAN bus is 0x18FFF0\ **SA**.
 
-Bank1 of PS numbers:
-~~~~~~~~~~~~~~~~~~~~
+**5.5.2 Bank1 of PS numbers:**
 
 +----------+----------+------------+--------------+----------------+------------+
 | Priority | Base PGN | PDU format | PDU specific | Source address | Data Field |
@@ -830,11 +818,11 @@ PGN message on CAN bus is 0x18FFF1\ **SA**.
 
 The pool of PS values should be from decimal 80 to 111.
 
-8. .. rubric:: Data Packet
-      :name: data-packet
+.. _`5.6 data packet`:
 
-   15. .. rubric:: Slope sensor information 2:
-          :name: slope-sensor-information-2
+**5.6 Data Packet**
+
+**5.6.1 Slope sensor information 2:**
 
 +----------+----------+------------+--------------+----------------+------------+
 | Priority | Base PGN | PDU format | PDU specific | Source address | Data Field |
@@ -856,8 +844,7 @@ little-endian.
 | 294     | SAEad11   | 1/32768 deg/bit | -250 to 252 deg | -250 deg | 3 bytes |
 +---------+-----------+-----------------+-----------------+----------+---------+
 
-Angular rate packet:
-~~~~~~~~~~~~~~~~~~~~
+**5.6.2 Angular rate packet:**
 
 +----------+----------+------------+--------------+----------------+------------+
 | Priority | Base PGN | PDU format | PDU specific | Source address | Data Field |
@@ -879,8 +866,7 @@ endian).
 | 288     | SAEva03   | 1/128 deg/s/bit | -250 to 252 deg/s | -250 deg/s | 2 bytes |
 +---------+-----------+-----------------+-------------------+------------+---------+
 
-Acceleration sensor packet:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**5.6.3 Acceleration sensor packet:**
 
 +----------+----------+------------+--------------+----------------+------------+
 | Priority | Base PGN | PDU format | PDU specific | Source address | Data Field |
@@ -908,8 +894,9 @@ with LSB = 0.01 m/s/s.
 6. .. rubric:: Address claiming
       :name: address-claiming
 
-   9. .. rubric:: Non-existence of node address:
-         :name: non-existence-of-node-address
+.. _`6.1 non-existence of node address`:
+
+**6.1 Non-existence of node address:**
 
 The node with null address sends out a global request and waits for the
 responses from all the nodes on CAN bus. Then, it sends out an address
@@ -917,8 +904,9 @@ claim message with a chosen address.
 
 |image2|
 
-Existence of node address:
---------------------------
+.. _`6.2 existence of node address`:
+
+**6.2 Existence of node address:**
 
 The node with an existed address sends out an address claim message and
 waits for responses from all the nodes on CAN bus, then decides to keep
